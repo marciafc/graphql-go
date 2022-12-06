@@ -72,3 +72,5 @@ go run cmd/server/server.go
 ```
 http://localhost:8080/
 ```
+
+Obs.: os passos acima já foram executados ao iniciar este projeto.
