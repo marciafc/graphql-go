@@ -74,3 +74,37 @@ http://localhost:8080/
 ```
 
 Obs.: os passos acima já foram executados ao iniciar este projeto.
+
+## Como atualizar o schema
+
+Sempre que alterar o schema da aplicação ('**graph\schema.graphqls**') é necessário executar o comando a seguir, para atualizar o models e o schema.resolvers
+
+```
+go run github.com/99designs/gqlgen generate
+```
+
+A primeira vez é necessário apagar manualmente os códigos 'CreateTodo' e 'Todos', pois são criados no init dentro do arquivo 'schema.resolvers.go'
+
+## Executar a aplicação
+
+```
+go run cmd/server/server.go
+
+http://localhost:8080/
+```
+
+## Exemplos de chamadas em Category
+
+- inserir
+
+```
+
+```
+
+- listar
+
+```
+
+```
+
+## Exemplos de chamadas em Course
