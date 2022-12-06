@@ -95,16 +95,28 @@ http://localhost:8080/
 
 ## Exemplos de chamadas em Category
 
-- inserir
+- Inserir
 
 ```
-
+mutation createCategory {
+  createCategory(input: {name: "Tecnologia", description: "Cursos de Tecnologia"}) {
+   id
+   name
+   description
+  }
+}
 ```
 
-- listar
+- Listar todas as categorias
 
 ```
-
+query queryCategories {
+  categories {
+    id
+    name
+    description
+  }
+}
 ```
 
 ## Exemplos de chamadas em Course
