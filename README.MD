@@ -120,3 +120,14 @@ query queryCategories {
 ```
 
 ## Exemplos de chamadas em Course
+
+- Inserir
+
+```
+mutation createCourse {
+  createCourse(input: {name: "Full Cyclle", description: "The best", categoryId: "d3e21990-5430-4550-8c38-3a81630d3b53"}) {
+   id
+   name
+  }
+}
+```
