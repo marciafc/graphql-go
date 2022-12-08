@@ -131,3 +131,14 @@ mutation createCourse {
   }
 }
 ```
+
+- Listar todos os cursos
+
+```
+query queryCourses {
+  courses {
+    id
+    name
+  }
+}
+```
