@@ -119,6 +119,24 @@ query queryCategories {
 }
 ```
 
+- Listar as categorias com os respectivos cursos
+
+```
+query queryCategoriesWithCourses {
+  categories {
+    id
+    name
+    description
+    courses {
+      id
+      name
+      description
+    }
+  }
+}
+
+```
+
 ## Exemplos de chamadas em Course
 
 - Inserir
