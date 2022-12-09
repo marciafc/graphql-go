@@ -73,17 +73,17 @@ go run cmd/server/server.go
 http://localhost:8080/
 ```
 
-Obs.: os passos acima já foram executados ao iniciar este projeto.
+Obs.: **os passos acima já foram executados ao iniciar este projeto.**
 
 ## Como atualizar o schema
 
-Sempre que alterar o schema da aplicação ('**graph\schema.graphqls**') é necessário executar o comando a seguir, para atualizar o models e o schema.resolvers
+Sempre que alterar o schema da aplicação ('**graph\schema.graphqls**') ou o pacote **graph/model** é necessário executar o comando a seguir, para atualizar o generated.go e o schema.resolvers.go
 
 ```
 go run github.com/99designs/gqlgen generate
 ```
 
-A primeira vez é necessário apagar manualmente os códigos 'CreateTodo' e 'Todos', pois são criados no init dentro do arquivo 'schema.resolvers.go'
+A primeira vez é necessário apagar manualmente os códigos 'CreateTodo' e 'Todos', pois são criados no gqlgen init, dentro do arquivo 'schema.resolvers.go'
 
 ## Executar a aplicação
 
@@ -95,9 +95,10 @@ http://localhost:8080/
 
 ## Exemplos de chamadas em Category
 
-- Inserir
+- Inserir categoria
 
 ```
+// REQUEST
 mutation createCategory {
   createCategory(input: {name: "Tecnologia", description: "Cursos de Tecnologia"}) {
    id
@@ -105,11 +106,23 @@ mutation createCategory {
    description
   }
 }
+
+// RESPONSE
+{
+  "data": {
+    "createCategory": {
+      "id": "107ad6fb-c0bb-4b8c-9b16-7e35fd166655",
+      "name": "Tecnologia",
+      "description": "Cursos de Tecnologia"
+    }
+  }
+}
 ```
 
 - Listar todas as categorias
 
 ```
+// REQUEST
 query queryCategories {
   categories {
     id
@@ -117,11 +130,25 @@ query queryCategories {
     description
   }
 }
+
+// RESPONSE
+{
+  "data": {
+    "categories": [
+      {
+        "id": "107ad6fb-c0bb-4b8c-9b16-7e35fd166655",
+        "name": "Tecnologia",
+        "description": "Cursos de Tecnologia"
+      }
+    ]
+  }
+}
 ```
 
 - Listar as categorias com os respectivos cursos
 
 ```
+// REQUEST
 query queryCategoriesWithCourses {
   categories {
     id
@@ -135,17 +162,47 @@ query queryCategoriesWithCourses {
   }
 }
 
+// RESPONSE
+{
+  "data": {
+    "categories": [
+      {
+        "id": "107ad6fb-c0bb-4b8c-9b16-7e35fd166655",
+        "name": "Tecnologia",
+        "description": "Cursos de Tecnologia",
+        "courses": [
+          {
+            "id": "d41f4b25-69f1-4ed0-abb7-f920d0df44b4",
+            "name": "Full Cyclle",
+            "description": "The best"
+          }
+        ]
+      }
+    ]
+  }
+}
 ```
 
 ## Exemplos de chamadas em Course
 
-- Inserir
+- Inserir course
 
 ```
+// REQUEST
 mutation createCourse {
-  createCourse(input: {name: "Full Cyclle", description: "The best", categoryId: "d3e21990-5430-4550-8c38-3a81630d3b53"}) {
+  createCourse(input: {name: "Full Cyclle", description: "The best", categoryId: "107ad6fb-c0bb-4b8c-9b16-7e35fd166655"}) {
    id
    name
+  }
+}
+
+// RESPONSE
+{
+  "data": {
+    "createCourse": {
+      "id": "d41f4b25-69f1-4ed0-abb7-f920d0df44b4",
+      "name": "Full Cyclle"
+    }
   }
 }
 ```
@@ -153,10 +210,57 @@ mutation createCourse {
 - Listar todos os cursos
 
 ```
+// REQUEST
 query queryCourses {
   courses {
     id
     name
+  }
+}
+
+// RESPONSE
+{
+  "data": {
+    "courses": [
+      {
+        "id": "d41f4b25-69f1-4ed0-abb7-f920d0df44b4",
+        "name": "Full Cyclle"
+      }
+    ]
+  }
+}
+```
+
+- Listar os cursos com a respectiva categoria
+
+```
+// REQUEST
+query queryCoursesWithCategory {
+  courses {
+    id
+    name
+    category{
+      id
+      name
+      description
+    }
+  }
+}
+
+// RESPONSE
+{
+  "data": {
+    "courses": [
+      {
+        "id": "d41f4b25-69f1-4ed0-abb7-f920d0df44b4",
+        "name": "Full Cyclle",
+        "category": {
+          "id": "107ad6fb-c0bb-4b8c-9b16-7e35fd166655",
+          "name": "Tecnologia",
+          "description": "Cursos de Tecnologia"
+        }
+      }
+    ]
   }
 }
 ```
